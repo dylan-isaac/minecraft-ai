@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "pydanticai-api-template-mcp": {
+      "url": "http://localhost:3001/sse"
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    }
+  }
+}

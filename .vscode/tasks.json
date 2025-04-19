@@ -1,0 +1,240 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Open Host Terminal (Outside Container)",
+            "type": "shell",
+            "command": "${command:workbench.action.terminal.openNativeConsole}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never"
+            },
+            "detail": "Opens a terminal on the host system outside the dev container."
+        },
+        {
+            "label": "Setup Logfire",
+            "type": "shell",
+            "command": "pat setup-logfire",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": false
+            },
+            "detail": "Authenticates with Logfire and sets the current project."
+        },
+        {
+            "label": "Run MCP Server",
+            "type": "shell",
+            "command": "pat run-mcp",
+            "problemMatcher": [],
+            "detail": "Runs the MCP (Model Context Protocol) server.",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "Run All Servers",
+            "dependsOn": [
+                "Setup Logfire",
+                "Run Dev Server (API)",
+                "Run MCP Server"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Launches both the REST API and MCP servers with Logfire setup."
+        },
+        {
+            "label": "Run Dev Server (API)",
+            "type": "shell",
+            "command": "pat run --reload",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Runs the FastAPI server with hot reload using the CLI.",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "Lint",
+            "type": "shell",
+            "command": "make lint",
+            "group": "test",
+            "problemMatcher": [
+                "$ruff"
+            ],
+            "detail": "Runs Ruff linter and formatter checks using Make."
+        },
+        {
+            "label": "Test",
+            "type": "shell",
+            "command": "make test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs pytest using Make."
+        },
+        {
+            "label": "Validate",
+            "type": "shell",
+            "command": "pat validate",
+            "problemMatcher": [],
+            "detail": "Runs the CLI validation command."
+        },
+        {
+            "label": "Cleanup",
+            "type": "shell",
+            "command": "pat cleanup",
+            "problemMatcher": [],
+            "detail": "Runs the CLI cleanup command."
+        },
+        {
+            "label": "Sync Configs",
+            "type": "shell",
+            "command": "make sync-configs",
+            "problemMatcher": [],
+            "detail": "Runs the configuration synchronization script."
+        },
+        {
+            "label": "Run Dev Server (pat)",
+            "type": "shell",
+            "command": "pat run --reload",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the FastAPI server with hot reload using the CLI.",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "Lint (pat)",
+            "type": "shell",
+            "command": "make lint",
+            "group": "test",
+            "problemMatcher": [
+                "$ruff"
+            ],
+            "detail": "Runs Ruff linter and formatter checks using Make."
+        },
+        {
+            "label": "Test (pat)",
+            "type": "shell",
+            "command": "make test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs pytest using Make."
+        },
+        {
+            "label": "Validate (pat)",
+            "type": "shell",
+            "command": "pat validate",
+            "problemMatcher": [],
+            "detail": "Runs the CLI validation command."
+        },
+        {
+            "label": "Cleanup (pat)",
+            "type": "shell",
+            "command": "pat cleanup",
+            "problemMatcher": [],
+            "detail": "Runs the CLI cleanup command."
+        },
+        {
+            "label": "Sync Configs (pat)",
+            "type": "shell",
+            "command": "make sync-configs",
+            "problemMatcher": [],
+            "detail": "Runs the configuration synchronization script."
+        },
+        {
+            "label": "Run Dev Server (pydanticai-api-template)",
+            "type": "shell",
+            "command": "pat run --reload",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the FastAPI server with hot reload using the CLI.",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "Lint (pydanticai-api-template)",
+            "type": "shell",
+            "command": "make lint",
+            "group": "test",
+            "problemMatcher": [
+                "$ruff"
+            ],
+            "detail": "Runs Ruff linter and formatter checks using Make."
+        },
+        {
+            "label": "Test (pydanticai-api-template)",
+            "type": "shell",
+            "command": "make test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs pytest using Make."
+        },
+        {
+            "label": "Validate (pydanticai-api-template)",
+            "type": "shell",
+            "command": "pat validate",
+            "problemMatcher": [],
+            "detail": "Runs the CLI validation command."
+        },
+        {
+            "label": "Cleanup (pydanticai-api-template)",
+            "type": "shell",
+            "command": "pat cleanup",
+            "problemMatcher": [],
+            "detail": "Runs the CLI cleanup command."
+        },
+        {
+            "label": "Sync Configs (pydanticai-api-template)",
+            "type": "shell",
+            "command": "make sync-configs",
+            "problemMatcher": [],
+            "detail": "Runs the configuration synchronization script."
+        },
+        {
+            "label": "Codex: Interactive",
+            "type": "shell",
+            "command": "codex",
+            "presentation": { "reveal": "always", "panel": "shared" },
+            "problemMatcher": [],
+            "detail": "Launch the OpenAI Codex CLI for live coding assistance"
+        },
+        {
+            "label": "Codex: Explain Codebase",
+            "type": "shell",
+            "command": "codex \"explain this codebase to me\"",
+            "presentation": { "reveal": "always", "panel": "shared" },
+            "problemMatcher": [],
+            "detail": "Run Codex once to summarize the current codebase"
+        }
+    ]
+}
