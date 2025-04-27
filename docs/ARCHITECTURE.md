@@ -1,10 +1,10 @@
 # Architecture
 
-This document describes the system design and architecture of the PydanticAI API Template.
+This document describes the system design and architecture of the Minecraft AI.
 
 ## System Overview
 
-The PydanticAI API Template is built on the following key components:
+The Minecraft AI is built on the following key components:
 
 ```text
 ┌───────────────────────────────────────────────────────┐
@@ -54,6 +54,30 @@ A command-line interface for managing the application, built with Typer.
 - **Server Command**: Starts the FastAPI server.
 - **Utility Commands**: Helper functions for validation, cleanup, etc.
 - **Development Tools**: Commands to assist the development workflow.
+
+### Minecraft Fabric Mod (Client-Side)
+
+Located in the `minecraft-mod/` directory, this is a client-side Fabric mod written in Java, designed to run within the player's Minecraft game instance.
+
+- **Purpose**: To provide an in-game interface for interacting with the AI backend. It adds custom chat commands (e.g., `/ai <prompt>`).
+- **Interaction**: When a command is issued, the mod captures the player's context (like current coordinates for location-based commands) and the user's prompt.
+- **Communication**: It sends an HTTP POST request to a dedicated endpoint on the FastAPI backend (e.g., `/minecraft/command`). This request includes the prompt, context data, and the necessary API key (`X-API-Key` header) for authentication.
+- **Backend Processing**: The FastAPI backend receives the request, potentially interacts with PydanticAI for complex queries or a database (SQLite) for saving/retrieving data like coordinates.
+- **Response Handling**: The mod receives the JSON response from the backend and displays the relevant information (e.g., AI response, confirmation message, retrieved coordinates) in the Minecraft chat interface.
+
+```text
+┌──────────────────┐      ┌───────────────────┐      ┌──────────────────┐
+│ Minecraft Client │──────│  Fabric Mod       │──────│ FastAPI Backend  │
+│ (with Mod)       │      │ (`minecraft-mod/`)│      │ (`src/`)         │
+│ Issues `/ai` cmd │----->│ Captures context  │----->│ Receives Request │
+│                  │      │ Sends HTTP POST   │      │ Processes Cmd    │
+│                  │      │                   │      │ (DB / AI)      │
+│ Receives Chat Msg│<-----│ Receives Response │<-----│ Sends Response   │
+│                  │      │ Displays in Chat  │      │ (JSON)           │
+└──────────────────┘      └───────────────────┘      └──────────────────┘
+```
+
+This architecture keeps the game-specific client logic separate from the core AI and API backend.
 
 ## Data Flow
 
@@ -154,7 +178,7 @@ Maintaining the project involves several key areas to ensure consistency, securi
 - **Dependency Management**: Use `uv` to manage Python dependencies in `pyproject.toml`.
 - **Configuration Synchronization**: Run `make sync-configs` to update related configuration files (e.g., pre-commit hooks, VS Code tasks) after changes to `pyproject.toml` or CLI commands.
 - **Docker Images**: Rebuild Docker images (`docker compose build`) after adding dependencies or modifying Dockerfiles.
-- **CLI Updates**: Keep the `Makefile`, `README.md`, and potentially VS Code tasks (`.vscode/tasks.json` - though often handled by `make sync-configs`) synchronized with changes in `src/pydanticai_api_template/cli.py`.
+- **CLI Updates**: Keep the `Makefile`, `README.md`, and potentially VS Code tasks (`.vscode/tasks.json` - though often handled by `make sync-configs`) synchronized with changes in `src/minecraft_ai/cli.py`.
 - **Core Dependency Upgrades**: Follow a careful process when upgrading major dependencies like Python, FastAPI, or PydanticAI, including reviewing changelogs and thorough testing.
 
 For detailed procedures on these and other maintenance tasks, such as managing the wishlist, updating VS Code settings, and modifying linting rules, refer to the [Project Maintenance Guide](./MAINTENANCE.md).

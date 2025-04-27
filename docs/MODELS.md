@@ -1,10 +1,10 @@
 # Pydantic Models Guide
 
-This document describes how to effectively use Pydantic models in the PydanticAI API Template, including best practices for type safety, validation, and error handling.
+This document describes how to effectively use Pydantic models in the Minecraft AI, including best practices for type safety, validation, and error handling.
 
 ## Model Basics
 
-The PydanticAI API Template uses Pydantic models for request/response validation, serialization, and documentation. Models are defined in `src/pydanticai_api_template/api/models.py`.
+The Minecraft AI uses Pydantic models for request/response validation, serialization, and documentation. Models are defined in `src/minecraft_ai/api/models.py`.
 
 ### Core Models
 
@@ -171,7 +171,7 @@ class WeatherForecast(BaseModel):
 
 ## System Architecture: The Flow of Data
 
-The PydanticAI API Template creates a robust architecture where Pydantic models ensure type safety and validation across different components.
+The Minecraft AI creates a robust architecture where Pydantic models ensure type safety and validation across different components.
 
 ### End-to-End Flow
 

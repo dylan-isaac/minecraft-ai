@@ -1,6 +1,6 @@
 # PromptFoo Testing
 
-This directory contains the [PromptFoo](https://promptfoo.dev/) configuration for testing prompts in the PydanticAI API Template.
+This directory contains the [PromptFoo](https://promptfoo.dev/) configuration for testing prompts in the Minecraft AI.
 
 ## Setup
 

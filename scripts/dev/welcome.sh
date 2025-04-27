@@ -2,7 +2,7 @@
 # welcome.sh - Dev container welcome script
 
 cat << 'EOF'
-🚀 PydanticAI API Template Development Environment
+🚀 Minecraft AI Development Environment
 
 # NOTE: For icons (e.g., from 'ls', 'lt') to display correctly,
 # install a Nerd Font (like MesloLGS NF) on your HOST machine

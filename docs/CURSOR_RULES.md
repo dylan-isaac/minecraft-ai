@@ -18,7 +18,7 @@ Cursor supports @ symbols for referencing files, docs, and code in chats:
 
 - `@file.py`: Reference a file
 - `@docs/OVERVIEW.md`: Reference documentation
-- `@src/pydanticai_api_template/api/models.py:10-20`: Reference specific code lines
+- `@src/minecraft_ai/api/models.py:10-20`: Reference specific code lines
 
 ### Keyboard Shortcuts
 
@@ -65,7 +65,7 @@ When asking Cursor to modify PydanticAI code, structure your prompts as:
 Example:
 
 ```text
-UPDATE src/pydanticai_api_template/api/models.py:
+UPDATE src/minecraft_ai/api/models.py:
 ADD field publication_date to StoryIdea model
 Make it Optional[datetime] with ISO format validation
 ```
@@ -75,7 +75,7 @@ Make it Optional[datetime] with ISO format validation
 For MCP server development, include relevant context:
 
 ```text
-@src/pydanticai_api_template/mcp_server.py
+@src/minecraft_ai/mcp_server.py
 
 Add a new tool that provides text summarization
 ```
@@ -122,7 +122,7 @@ Rule files (`.mdc`) use Markdown with YAML frontmatter:
 ---
 description: "A brief explanation of when this rule applies (used by AI)"
 globs: # List of glob patterns for files/folders
-  - "src/pydanticai_api_template/**.py"
+  - "src/minecraft_ai/**.py"
   - "!tests/**" # Optional negation
 alwaysApply: false # Set to true for rules that always apply
 ---

@@ -1,6 +1,7 @@
 # Documentation Overview
 
-This document provides a comprehensive guide to all documentation in the PydanticAI API Template project.
+This document provides a comprehensive guide to all documentation in the Minecraft AI project.
+The primary goal is to enable interaction with AI agents and data management (like saving coordinates) directly from within the Minecraft game client using a companion Fabric mod that communicates with the backend API.
 
 ## Core Documentation
 

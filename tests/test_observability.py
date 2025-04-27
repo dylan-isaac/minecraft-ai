@@ -3,7 +3,7 @@
 import os
 from unittest.mock import MagicMock, patch
 
-from pydanticai_api_template.utils.observability import (
+from minecraft_ai.utils.observability import (
     is_logfire_enabled,
     setup_logfire,
     shutdown_logfire,
@@ -38,13 +38,9 @@ def test_is_logfire_enabled() -> None:
     assert is_logfire_enabled() is False
 
 
-@patch("pydanticai_api_template.utils.observability.logfire")
-@patch(
-    "pydanticai_api_template.utils.observability.configure_pydantic_ai_instrumentation"
-)
-def test_setup_logfire_disabled(
-    mock_configure: MagicMock, mock_logfire: MagicMock
-) -> None:
+@patch("minecraft_ai.utils.observability.logfire")
+@patch("minecraft_ai.utils.observability.configure_pydantic_ai_instrumentation")
+def test_setup_logfire_disabled(mock_configure: MagicMock, mock_logfire: MagicMock) -> None:
     """Test setup_logfire when LogFire is disabled."""
     # Ensure LogFire is disabled
     os.environ["LOGFIRE_ENABLED"] = "false"
@@ -57,14 +53,10 @@ def test_setup_logfire_disabled(
     mock_configure.assert_not_called()
 
 
-@patch("pydanticai_api_template.utils.observability.logfire")
-@patch(
-    "pydanticai_api_template.utils.observability.configure_pydantic_ai_instrumentation"
-)
-@patch("pydanticai_api_template.utils.observability.HAS_PYDANTIC_AI_INTEGRATION", True)
-def test_setup_logfire_enabled(
-    mock_configure: MagicMock, mock_logfire: MagicMock
-) -> None:
+@patch("minecraft_ai.utils.observability.logfire")
+@patch("minecraft_ai.utils.observability.configure_pydantic_ai_instrumentation")
+@patch("minecraft_ai.utils.observability.HAS_PYDANTIC_AI_INTEGRATION", True)
+def test_setup_logfire_enabled(mock_configure: MagicMock, mock_logfire: MagicMock) -> None:
     """Test setup_logfire when LogFire is enabled via LOGFIRE_TOKEN."""
     # Enable LogFire and set token
     os.environ["LOGFIRE_ENABLED"] = "true"
@@ -90,7 +82,7 @@ def test_setup_logfire_enabled(
     mock_configure.assert_called_once()
 
 
-@patch("pydanticai_api_template.utils.observability.logfire")
+@patch("minecraft_ai.utils.observability.logfire")
 def test_shutdown_logfire_disabled(mock_logfire: MagicMock) -> None:
     """Test shutdown_logfire when LogFire is disabled."""
     # Ensure LogFire is disabled
@@ -103,7 +95,7 @@ def test_shutdown_logfire_disabled(mock_logfire: MagicMock) -> None:
     mock_logfire.shutdown.assert_not_called()
 
 
-@patch("pydanticai_api_template.utils.observability.logfire")
+@patch("minecraft_ai.utils.observability.logfire")
 def test_shutdown_logfire_enabled(mock_logfire: MagicMock) -> None:
     """Test shutdown_logfire when LogFire is enabled."""
     # Enable LogFire
@@ -117,14 +109,10 @@ def test_shutdown_logfire_enabled(mock_logfire: MagicMock) -> None:
     mock_logfire.shutdown.assert_called_once()
 
 
-@patch("pydanticai_api_template.utils.observability.logfire")
-@patch(
-    "pydanticai_api_template.utils.observability.configure_pydantic_ai_instrumentation"
-)
-@patch("pydanticai_api_template.utils.observability.HAS_PYDANTIC_AI_INTEGRATION", True)
-def test_setup_logfire_promptfoo(
-    mock_configure: MagicMock, mock_logfire: MagicMock
-) -> None:
+@patch("minecraft_ai.utils.observability.logfire")
+@patch("minecraft_ai.utils.observability.configure_pydantic_ai_instrumentation")
+@patch("minecraft_ai.utils.observability.HAS_PYDANTIC_AI_INTEGRATION", True)
+def test_setup_logfire_promptfoo(mock_configure: MagicMock, mock_logfire: MagicMock) -> None:
     """Test setup_logfire when called from prompt_test command via LOGFIRE_TOKEN."""
     # Enable LogFire and set token
     os.environ["LOGFIRE_ENABLED"] = "true"

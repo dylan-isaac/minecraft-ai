@@ -1,6 +1,6 @@
 # API Reference
 
-This document provides reference documentation for the PydanticAI API Template's endpoints.
+This document provides reference documentation for the Minecraft AI's endpoints.
 
 ## Base URL
 
@@ -43,7 +43,7 @@ If no API key is set in the environment, authentication will be skipped with a w
 
 ```json
 {
-  "message": "Welcome to the PydanticAI API Template!"
+  "message": "Welcome to the Minecraft AI!"
 }
 ```
 
@@ -176,7 +176,7 @@ async def main():
 
 ### Adding Custom Tools
 
-To add custom tools to the MCP server, edit the `/app/src/pydanticai_api_template/mcp_server.py` file and add new tool functions using the `@server.tool()` decorator:
+To add custom tools to the MCP server, edit the `/app/src/minecraft_ai/mcp_server.py` file and add new tool functions using the `@server.tool()` decorator:
 
 ```python
 @server.tool()

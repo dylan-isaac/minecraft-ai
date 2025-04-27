@@ -1,0 +1,5 @@
+{
+  "text.autoconfig.minecraft-ai.title": "Minecraft KI-Konfiguration",
+  "text.autoconfig.minecraft-ai.option.apiKey": "Mod-API-Schlüssel",
+  "text.autoconfig.minecraft-ai.option.apiEndpoint": "KI-Backend-Endpunkt"
+}

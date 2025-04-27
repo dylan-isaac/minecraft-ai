@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Example MCP client for connecting to the PydanticAI API Template MCP server.
+Example MCP client for connecting to the Minecraft AI MCP server.
 
 This example demonstrates how to:
 1. Connect to the MCP server

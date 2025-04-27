@@ -1,8 +1,8 @@
-name: pydanticai-api-template
+name: minecraft-ai
 
 services:
   # Development service with hot reload
-  pydanticai-api-template-dev:
+  minecraft-ai-dev:
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -44,7 +44,7 @@ services:
     command: ["tail", "-f", "/dev/null"]
 
   # Production-like service (without hot reload or dev tools)
-  pydanticai-api-template:
+  minecraft-ai:
     build:
       context: .
       # Uses the production Dockerfile by default

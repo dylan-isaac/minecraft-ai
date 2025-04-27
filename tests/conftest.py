@@ -1,5 +1,5 @@
 """
-Pytest configuration file for the pydanticai_api_template package tests.
+Pytest configuration file for the minecraft_ai package tests.
 
 This file contains pytest configuration for the test suite, including
 environment setup and test fixtures that are used across multiple test files.

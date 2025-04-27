@@ -1,16 +1,17 @@
 {
-    "name": "PydanticAI API Template Dev Container",
+    "name": "Minecraft AI Dev Container (Python + Java)",
     "dockerComposeFile": [
-        "../docker-compose.yml"
+        "../docker-compose.yml",
+        "../docker-compose.override.yml"
     ],
-    "service": "pydanticai-api-template-dev",
+    "service": "minecraft-ai-dev",
     "workspaceFolder": "/app",
     "forwardPorts": [
         8000,
         3001
     ],
     "runServices": [
-        "pydanticai-api-template-dev"
+        "minecraft-ai-dev"
     ],
     "shutdownAction": "stopCompose",
     "customizations": {
@@ -36,7 +37,10 @@
                 "terminal.integrated.fontSize": 14,
                 "files.eol": "\n",
                 "files.trimTrailingWhitespace": true,
-                "files.insertFinalNewline": true
+                "files.insertFinalNewline": true,
+                "java.compile.nullAnalysis.mode": "automatic",
+                "java.configuration.updateBuildConfiguration": "automatic",
+                "java.jdt.ls.java.home": "/usr/local/sdkman/candidates/java/current"
             },
             "extensions": [
                 "ms-python.python",
@@ -64,10 +68,23 @@
                 "Pydantic.pydantic-vscode",
                 "meqa.promptfoo",
                 "pydantic.logfire",
-                "DorianMassoulier.repomix-runner"
+                "DorianMassoulier.repomix-runner",
+                "vscjava.vscode-java-pack",
+                "redhat.java",
+                "vscjava.vscode-gradle",
+                "vscjava.vscode-maven",
+                "vscjava.vscode-java-debug",
+                "vscjava.vscode-java-test"
             ]
         }
     },
-    "postCreateCommand": "chmod +x scripts/dev/welcome.sh && scripts/dev/welcome.sh && python scripts/dev/install_hooks.py && echo 'Dev container created! Use Cmd+Shift+B to start both REST API and MCP servers, or type \"start\" in the terminal.'",
+    "features": {
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "21",
+            "installMaven": "false",
+            "installGradle": "true"
+        }
+    },
+    "postCreateCommand": "chmod +x scripts/dev/welcome.sh && scripts/dev/welcome.sh && python scripts/dev/install_hooks.py && echo 'Dev container ready! \\n- Start API & MCP servers: Run Task \"Run All Servers\" (Cmd+Shift+B or type \"start\") \\n- Build & Deploy Mod: Run Task \"Build & Deploy Mod (Fabric)\" \\n- API Docs: http://localhost:8000/docs'",
     "postAttachCommand": "pre-commit install"
 }

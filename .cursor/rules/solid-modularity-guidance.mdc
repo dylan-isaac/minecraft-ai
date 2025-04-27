@@ -1,7 +1,7 @@
 ---
 description: "SOLID/Unix modularity guidance for source files (auto-attached)"
 globs:
-  - src/pydanticai_api_template/**.py
+  - src/minecraft_ai/**.py
 alwaysApply: false
 ---
 # SOLID & Unix Philosophy: Component Modularity

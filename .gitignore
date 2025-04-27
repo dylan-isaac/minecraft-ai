@@ -81,7 +81,7 @@ Thumbs.db
 
 # Gradle / Java
 /build/
-/.gradle/
+*/.gradle/
 /run/
 *.iml
 *.ipr

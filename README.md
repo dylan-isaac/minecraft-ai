@@ -1,6 +1,6 @@
-# PydanticAI API Template
+# Minecraft AI
 
-A modern Python project template for building AI-powered APIs with PydanticAI, FastAPI, and Docker.
+A project for building AI-powered agents and APIs for Minecraft, enabling interaction directly from the Minecraft game client via a companion Fabric mod.
 
 ## Quick Start (Recommended)
 
@@ -28,15 +28,21 @@ The development environment uses modern CLI tools like `eza` with icons enabled 
 
 **Note:** If you see boxes (`□`) or missing icons in the terminal after rebuilding the container, it likely means the font name specified in `.devcontainer/devcontainer.json` doesn't exactly match a Nerd Font installed and recognized on your host system. Double-check the font name in your OS font manager and the `devcontainer.json` setting.
 
-1. **Open in Dev Container**:
-   - Clone this repository
-   - Open in VS Code/Cursor
-   - Click "Reopen in Container" when prompted
+2. **Clone & Initialize**:
+   - Clone this repository: `git clone <repo-url>`
+   - Navigate into the project directory: `cd minecraft-ai`
+   - Run the initialization script: `./initialize.sh`
+   - Follow the prompts to configure paths and API keys. This will create `.env` and `docker-compose.override.yml` (which are gitignored).
 
-2. **Start Development**:
-   - Inside the container, run `start` or press `Cmd+Shift+B` (macOS) / `Ctrl+Shift+B` (Windows/Linux)
-   - Visit <http://localhost:8000/docs> for API documentation
-   - For the MCP server: `pat run-mcp` (accessible at <http://localhost:3001>)
+3. **Open in Dev Container**:
+   - Open the project folder in VS Code/Cursor.
+   - Click \"Reopen in Container\" when prompted (or use the Command Palette).
+   - The container will build using the settings from the override file.
+
+4. **Start Development**:
+   - Inside the container, run `start` or press `Cmd+Shift+B` (macOS) / `Ctrl+Shift+B` (Windows/Linux).
+   - Visit <http://localhost:8000/docs> for API documentation.
+   - For the MCP server: `pat run-mcp` (accessible at <http://localhost:3001>).
 
 ## Documentation Map
 
@@ -54,6 +60,7 @@ This README provides a high-level overview. For detailed information, refer to:
 | [Observability](./docs/OBSERVABILITY.md)     | Logging, tracing, and monitoring with Logfire           |
 | [Cursor Rules](./docs/CURSOR_RULES.md)       | AI-assisted development with Cursor                     |
 | [Wishlist](./wishlist/)                      | Future improvements and feature ideas                   |
+| [Minecraft Integration](./docs/MINECRAFT_INTEGRATION.md) | Connecting the game client via Fabric mod (TBD)         |
 
 ## Key Features
 
@@ -67,6 +74,7 @@ This README provides a high-level overview. For detailed information, refer to:
 - **Observability**: Complete visibility with Logfire integration
 - **Cursor Rules**: Smart AI-assisted development with contextual reminders
 - **Repomix Runner**: Easily bundle project files for providing context to AI assistants ([VS Code Extension](https://marketplace.cursorapi.com/items?itemName=DorianMassoulier.repomix-runner))
+- **Minecraft Integration**: Communicate with the API from in-game using a client-side Fabric mod.
 
 ## Project Maintenance
 
@@ -113,11 +121,16 @@ This ensures the files are correctly formatted and placed without potential conf
 ├── .devcontainer    # Dev container configuration
 ├── .vscode          # VS Code settings and tasks
 ├── docs/            # Detailed documentation
+├── minecraft-mod/   # Client-side Fabric mod for in-game interaction
+│   └── src/main/java/ac/dylanisa/ # Mod source code
+│       ├── command/ # Command implementations (e.g., AICommand.java)
+│       └── ...      # Other mod components (config, main class, etc.)
 ├── promptfoo/       # Prompt testing configuration
-├── src/             # Source code
-│   └── pydanticai_api_template/
+├── src/             # Python backend source code (FastAPI, PydanticAI)
+│   └── minecraft_ai/
 │       ├── api/     # FastAPI routes and endpoints
 │       ├── agents/  # PydanticAI agent definitions
+│       ├── database/# Database models and connection (SQLite)
 │       ├── models/  # Pydantic data models
 │       ├── mcp/     # MCP server implementation
 │       └── cli.py   # Command-line interface
@@ -126,6 +139,37 @@ This ensures the files are correctly formatted and placed without potential conf
 ├── pyproject.toml   # Project dependencies and config
 └── Makefile         # Common development commands
 ```
+
+## Minecraft Client Integration
+
+A key goal of this project is to allow interaction with the AI backend directly from within the Minecraft game. This is achieved through:
+
+1.  **FastAPI Backend (`src/`)**: The Python application serves the AI models and manages data (like saved coordinates) via a REST API. It runs as a separate process, typically within the Docker dev container (`Cmd+Shift+B` or `start` task).
+2.  **Fabric Mod (`minecraft-mod/`)**: A client-side Minecraft mod (written in Java) that adds in-game commands (e.g., `/ai`).
+
+**Development Workflow:**
+
+Due to limitations running graphical applications inside Docker, the recommended workflow is:
+
+*   **Build the mod JAR** inside the dev container using the `Build Mod (Fabric)` VS Code task (or running `./gradlew build` in `minecraft-mod/`).
+*   **Install and run** the Minecraft client with Fabric Loader **on your host machine** (outside the container).
+*   **Copy the built mod JAR** from `minecraft-mod/build/libs/` inside the container to your host machine's Minecraft `mods` folder.
+
+When used, the mod running on your host sends requests to the FastAPI backend (running in the container at `http://localhost:8000`), including player context like coordinates, and displays the backend's response in the game chat.
+
+See the [Developer Guide](./docs/DEVELOPER.md) for detailed setup and usage instructions.
+
+### Localization
+
+The mod supports multiple languages for its configuration screen (visible via ModMenu). Translations are stored in standard Minecraft language files (`.json`) within the `minecraft-mod/src/main/resources/assets/minecraft-ai/lang/` directory. See the [Developer Guide Localization Section](./docs/DEVELOPER.md#localization) for details on adding or modifying translations.
+
+## Automated Mod Deployment (Optional)
+
+To streamline development, you can configure the project to automatically copy the built mod JAR to your test Minecraft instance folder.
+
+1.  **Run Initialization Script:** When you first set up the project, run `./initialize.sh`. It will prompt you for the path to your host machine's Prism Launcher (or similar) folder. This path is saved in the gitignored `docker-compose.override.yml` file, which sets up the necessary Docker volume mount, making `/prism-launcher` available inside the container.
+2.  **Configure Target Path:** The `initialize.sh` script also prompts for the desired deployment path *inside the container* (e.g., `/prism-launcher/instances/MyTestInstance/.minecraft/mods`). This path is saved as `MINECRAFT_MOD_TARGET_DIR` in the gitignored `.env` file.
+3.  **Use Build & Deploy Task:** Run the \"Build & Deploy Mod (Fabric)\" task from the VS Code command palette (Ctrl+Shift+P or Cmd+Shift+P). If `MINECRAFT_MOD_TARGET_DIR` was set correctly during initialization (and the directory exists inside the container), the task will build the mod and automatically copy the JAR to the specified directory.
 
 ## Basic Usage Examples
 
@@ -188,7 +232,7 @@ npm install -g @openai/codex
 - `codex "explain this codebase to me"` → one-shot prompt
 - You can also pipe in a file path:
   ```bash
-  codex src/pydanticai_api_template/api/endpoints.py
+  codex src/minecraft_ai/api/endpoints.py
   ```
 
 **VS Code Task:**
@@ -248,25 +292,3 @@ OPENAI_API_KEY=your_openai_api_key_here
 ANTHROPIC_API_KEY=your_claude_api_key_here
 PYDANTICAI_API_KEY=your_api_key_here  # For API authentication
 ```
-
-### API Authentication
-
-The API endpoints are protected with API key authentication. To generate a secure API key:
-
-```bash
-# Run the API key generation command
-pat generate-api-key
-```
-
-This will generate a secure random key that you can add to your `.env` file as `PYDANTICAI_API_KEY`.
-
-When making requests to protected endpoints like `/chat` or `/story`, include the API key in the `X-API-Key` header:
-
-```bash
-curl -X POST "http://localhost:8000/chat" \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: your_api_key_here" \
-  -d '{"message":"Tell me a joke"}'
-```
-
-If no API key is set in the environment, authentication will be skipped (with a warning in the logs).

@@ -1,6 +1,6 @@
 # Observability and Testing
 
-This document describes the observability and testing infrastructure of the PydanticAI API Template project.
+This document describes the observability and testing infrastructure of the Minecraft AI project.
 
 ## Observability with LogFire
 
@@ -109,7 +109,7 @@ To run the tests:
 pat test
 
 # Run tests with coverage reporting
-pytest --cov=pydanticai_api_template tests/
+pytest --cov=minecraft_ai tests/
 ```
 
 ### Testing Strategies

@@ -16,3 +16,4 @@ build/
 
 # Environment and configuration
 .env
+!.env.example

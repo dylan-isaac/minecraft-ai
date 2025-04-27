@@ -7,7 +7,7 @@
             "request": "launch",
             "module": "uvicorn",
             "args": [
-                "pydanticai_api_template.api.endpoints:app",
+                "minecraft_ai.api.endpoints:app",
                 "--reload",
                 "--host", "0.0.0.0",
                 "--port", "8000"

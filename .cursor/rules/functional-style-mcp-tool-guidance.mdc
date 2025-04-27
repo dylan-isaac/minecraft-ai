@@ -1,7 +1,7 @@
 ---
 description: "Functional style guidance for MCP server tools (auto-attached)"
 globs:
-  - src/pydanticai_api_template/mcp_server.py
+  - src/minecraft_ai/mcp_server.py
 alwaysApply: false
 ---
 # Functional Style: MCP Tool Guidance

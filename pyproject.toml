@@ -1,7 +1,7 @@
 [project]
-name = "pydanticai-api-template"
+name = "minecraft-ai"
 version = "0.1.0"
-description = "A template for building FastAPI applications with PydanticAI."
+description = "An AI-powered agent and API for Minecraft interactions."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -19,6 +19,7 @@ dependencies = [
     "typing-extensions>=4.7.0",
     "logfire>=0.16.0",
     "httpx>=0.24.1",
+    "sqlmodel>=0.0.16",
 ]
 
 [project.optional-dependencies]
@@ -36,16 +37,16 @@ dev = [
 test = ["pytest>=7.4.0", "pytest-cov>=4.1.0", "pytest-asyncio>=0.23.0"]
 
 [project.scripts]
-pat = "pydanticai_api_template.cli:app"
+pat = "minecraft_ai.cli:app"
 
 [tool.hatch.build]
 artifacts = ["src/**/*.py", "src/**/py.typed"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/pydanticai_api_template"]
+packages = ["src/minecraft_ai"]
 
 [tool.ruff]
-line-length = 88
+line-length = 120
 target-version = "py312"
 
 [tool.ruff.lint]
@@ -78,7 +79,7 @@ follow_imports = "skip"
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = "pydanticai_api_template.api.models"
+module = "minecraft_ai.api.models"
 disallow_untyped_decorators = false
 
 [[tool.mypy.overrides]]
@@ -87,7 +88,7 @@ ignore_missing_imports = true
 
 # Relax decorator checks for tests and CLI due to pytest/typer interaction
 [[tool.mypy.overrides]]
-module = ["tests.*", "pydanticai_api_template.cli"]
+module = ["tests.*", "minecraft_ai.cli"]
 disallow_untyped_decorators = false
 
 [tool.pydantic-mypy]

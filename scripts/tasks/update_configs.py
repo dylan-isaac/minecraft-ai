@@ -35,10 +35,7 @@ except ImportError:
 try:
     import yaml
 except ImportError:
-    print(
-        "Error: 'PyYAML' is required for this script. "
-        "Please install it ('uv pip install pyyaml')."
-    )
+    print("Error: 'PyYAML' is required for this script. " "Please install it ('uv pip install pyyaml').")
     sys.exit(1)
 
 # --- Configuration ---
@@ -80,7 +77,7 @@ CLI_COMMANDS_FOR_TASKS = [
 ]
 
 CONFIG_FILE = "pyproject.toml"
-PROJECT_NAME = "pydanticai_api_template"
+PROJECT_NAME = "minecraft_ai"
 # Ignore type checking on non-literal assignment
 IGNORE_TYPES = ["mcp"]
 
@@ -135,10 +132,7 @@ def extract_dev_dependencies(pyproject_data: Dict[str, Any]) -> Dict[str, str]:
             # Handle cases without version specifiers, or just log a warning
             name_match = re.match(r"^([a-zA-Z0-9_-]+)", dep_str)
             if name_match:
-                print(
-                    f"Warning: Could not parse version for dev dependency '{dep_str}'. "
-                    f"Adding without version."
-                )
+                print(f"Warning: Could not parse version for dev dependency '{dep_str}'. " f"Adding without version.")
                 dev_deps[name_match.group(1)] = ""  # Or some default/marker
             else:
                 print(f"Warning: Could not parse dev dependency string '{dep_str}'")
@@ -197,10 +191,7 @@ def update_precommit_config(dev_deps: Dict[str, str]) -> None:
                     repo["rev"] = target_rev
                     updated = True
             else:
-                print(
-                    f"Warning: No version found for dependency '{mapped_dep_name}' "
-                    f"to update repo '{repo_url}'"
-                )
+                print(f"Warning: No version found for dependency '{mapped_dep_name}' " f"to update repo '{repo_url}'")
 
     if updated:
         try:
@@ -208,14 +199,9 @@ def update_precommit_config(dev_deps: Dict[str, str]) -> None:
                 yaml.dump(precommit_config, f, sort_keys=False, indent=2)
             print("Successfully updated .pre-commit-config.yaml.")
         except Exception as e:
-            print(
-                f"Error writing updated {PRECOMMIT_CONFIG_PATH}: {e}", file=sys.stderr
-            )
+            print(f"Error writing updated {PRECOMMIT_CONFIG_PATH}: {e}", file=sys.stderr)
     else:
-        print(
-            "No version updates needed for pre-commit hooks "
-            "based on tracked dependencies."
-        )
+        print("No version updates needed for pre-commit hooks " "based on tracked dependencies.")
 
 
 def generate_vscode_task(
@@ -255,7 +241,7 @@ def update_vscode_tasks(pyproject: Dict[str, Any]) -> None:
     """Update VS Code tasks based on available CLI commands."""
     tasks_path = Path(".vscode/tasks.json")
     # Use project name from pyproject.toml
-    project_name = pyproject.get("project", {}).get("name", "pydanticai-api-template")
+    project_name = pyproject.get("project", {}).get("name", "minecraft-ai")
 
     # Define base structure if file doesn't exist
     if not tasks_path.exists():
@@ -270,9 +256,7 @@ def update_vscode_tasks(pyproject: Dict[str, Any]) -> None:
         except (json.JSONDecodeError, FileNotFoundError):
             tasks = {"version": "2.0.0", "tasks": []}
 
-    assert isinstance(tasks, dict), (
-        f"Expected 'tasks' to be a dict, but got {type(tasks)}"
-    )
+    assert isinstance(tasks, dict), f"Expected 'tasks' to be a dict, but got {type(tasks)}"
 
     # Ensure tasks["tasks"] exists and is a list
     if "tasks" not in tasks or not isinstance(tasks["tasks"], list):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Install custom Git hooks for the PydanticAI API Template project.
+Install custom Git hooks for the Minecraft AI project.
 """
 
 import os
@@ -19,7 +19,7 @@ def install_pre_commit_hook() -> bool:
 
     hook_content = """#!/bin/sh
 # Auto-sync configs when CLI files change
-if git diff --cached --name-only | grep -q "src/pydanticai_api_template/cli.py"; then
+if git diff --cached --name-only | grep -q "src/minecraft_ai/cli.py"; then
     echo "CLI file changed, syncing configs..."
     python scripts/tasks/update_configs.py
     git add .vscode/tasks.json .pre-commit-config.yaml

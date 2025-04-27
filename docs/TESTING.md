@@ -1,6 +1,6 @@
 # Testing Guide
 
-This document describes how to test the PydanticAI API Template, including the MCP server, model validation, and type checking.
+This document describes how to test the Minecraft AI, including the MCP server, model validation, and type checking.
 
 ## Running Tests
 
@@ -21,13 +21,13 @@ python -m pytest tests/test_mcp_server.py -v
 To generate test coverage reports locally:
 
 ```bash
-python -m pytest --cov=pydanticai_api_template tests/
+python -m pytest --cov=minecraft_ai tests/
 ```
 
 This will show coverage statistics in the terminal output. You can also generate an HTML report for more detailed information:
 
 ```bash
-python -m pytest --cov=pydanticai_api_template tests/ --cov-report=html
+python -m pytest --cov=minecraft_ai tests/ --cov-report=html
 ```
 
 The HTML report will be generated in the `htmlcov/` directory.
@@ -99,7 +99,7 @@ Testing Pydantic models is crucial for ensuring your validation logic works corr
 import pytest
 from pydantic import ValidationError
 
-from pydanticai_api_template.api.models import ChatMessage
+from minecraft_ai.api.models import ChatMessage
 
 def test_chat_message_valid():
     # Valid case
@@ -130,7 +130,7 @@ def test_chat_message_whitespace():
 For models with interdependent validation rules, test each case:
 
 ```python
-from pydanticai_api_template.api.models import UserSignup
+from minecraft_ai.api.models import UserSignup
 
 def test_password_match():
     # Passwords match
@@ -160,7 +160,7 @@ Test that your models serialize to and from JSON correctly:
 
 ```python
 import json
-from pydanticai_api_template.api.models import ChatResponse
+from minecraft_ai.api.models import ChatResponse
 
 def test_chat_response_serialization():
     # Create model instance
@@ -190,11 +190,11 @@ Testing AI-powered applications can be challenging due to the need for API keys 
 from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
-from pydanticai_api_template.api.models import ChatResponse
-from pydanticai_api_template.api.endpoints import chat_with_agent
+from minecraft_ai.api.models import ChatResponse
+from minecraft_ai.api.endpoints import chat_with_agent
 
 @pytest.mark.asyncio
-@patch("pydanticai_api_template.api.endpoints.ai_agent")
+@patch("minecraft_ai.api.endpoints.ai_agent")
 async def test_chat_endpoint(mock_agent):
     # Create a mock result
     mock_result = MagicMock()
@@ -204,7 +204,7 @@ async def test_chat_endpoint(mock_agent):
     mock_agent.run = AsyncMock(return_value=mock_result)
 
     # Test the endpoint with a chat message
-    from pydanticai_api_template.api.models import ChatMessage
+    from minecraft_ai.api.models import ChatMessage
     response = await chat_with_agent(ChatMessage(message="Hello AI"))
 
     # Verify the response
@@ -218,10 +218,10 @@ async def test_chat_endpoint(mock_agent):
 
 ```python
 @pytest.mark.asyncio
-@patch("pydanticai_api_template.api.endpoints.ai_agent", None)
+@patch("minecraft_ai.api.endpoints.ai_agent", None)
 async def test_chat_endpoint_no_agent():
     # Test when AI agent is not available
-    from pydanticai_api_template.api.models import ChatMessage
+    from minecraft_ai.api.models import ChatMessage
     from fastapi import HTTPException
 
     with pytest.raises(HTTPException) as exc_info:
@@ -243,7 +243,7 @@ Static type checking is an important part of the testing strategy. The project u
 mypy src tests
 
 # Check specific modules
-mypy src/pydanticai_api_template/api/models.py
+mypy src/minecraft_ai/api/models.py
 ```
 
 ### Common Type Issues and Solutions
@@ -252,7 +252,7 @@ mypy src/pydanticai_api_template/api/models.py
 
    ```toml
    [[tool.mypy.overrides]]
-   module = "pydanticai_api_template.api.models"
+   module = "minecraft_ai.api.models"
    disallow_untyped_decorators = false
    ```
 
@@ -367,7 +367,7 @@ Add prompt testing to your CI pipeline:
 - name: Install promptfoo
   run: npm install -g promptfoo@0.1.0
 - name: Run prompt tests
-  run: python -m pydanticai_api_template.cli prompt-test
+  run: python -m minecraft_ai.cli prompt-test
   env:
     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 ```
@@ -382,7 +382,7 @@ prompt-testing:
     - npm install -g promptfoo@0.1.0
     - pip3 install -e ".[dev,test]"
   script:
-    - python -m pydanticai_api_template.cli prompt-test
+    - python -m minecraft_ai.cli prompt-test
   variables:
     OPENAI_API_KEY: $OPENAI_API_KEY
 ```

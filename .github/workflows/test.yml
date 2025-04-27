@@ -44,4 +44,4 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest --cov=pydanticai_api_template tests/
+          pytest --cov=minecraft_ai tests/

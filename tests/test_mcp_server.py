@@ -6,10 +6,9 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from fastapi import FastAPI
+from minecraft_ai.mcp_server import chat, create_app
 from starlette.applications import Starlette
 from starlette.routing import Mount
-
-from pydanticai_api_template.mcp_server import chat, create_app
 
 
 @pytest.fixture
@@ -22,7 +21,7 @@ def test_create_app(app: FastAPI) -> None:
     """Test app creation, metadata, and correct SSE mounting."""
     # Basic app metadata checks
     assert app.title == "PydanticAI MCP Server"
-    assert app.description == "MCP server for PydanticAI API Template"
+    assert app.description == "MCP server for Minecraft AI"
 
     # Verify that the SSE app is mounted correctly at the root
     mount_route = None
@@ -32,9 +31,7 @@ def test_create_app(app: FastAPI) -> None:
             break
 
     assert mount_route is not None, "No Mount found at root path ('')"
-    assert isinstance(mount_route.app, (FastAPI, Starlette)), (
-        "Mounted app is not a FastAPI or Starlette instance"
-    )
+    assert isinstance(mount_route.app, (FastAPI, Starlette)), "Mounted app is not a FastAPI or Starlette instance"
 
     # Verify the mounted app has the /sse route internally
     sse_route_found = False
@@ -48,7 +45,7 @@ def test_create_app(app: FastAPI) -> None:
 
 
 @pytest.mark.asyncio
-@patch("pydanticai_api_template.mcp_server.ai_agent")
+@patch("minecraft_ai.mcp_server.ai_agent")
 async def test_chat_success(
     mock_ai_agent: MagicMock,
 ) -> None:
@@ -62,7 +59,7 @@ async def test_chat_success(
 
 
 @pytest.mark.asyncio
-@patch("pydanticai_api_template.mcp_server.ai_agent", None)
+@patch("minecraft_ai.mcp_server.ai_agent", None)
 async def test_chat_no_agent() -> None:
     """Test chat interaction when agent is not found."""
     response = await chat("Hello")
@@ -70,7 +67,7 @@ async def test_chat_no_agent() -> None:
 
 
 @pytest.mark.asyncio
-@patch("pydanticai_api_template.mcp_server.ai_agent")
+@patch("minecraft_ai.mcp_server.ai_agent")
 async def test_chat_exception(
     mock_ai_agent: MagicMock,
 ) -> None:

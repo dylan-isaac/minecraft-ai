@@ -1,6 +1,6 @@
-# Project Journey: Architecting the PydanticAI API Template
+# Project Journey: Architecting the Minecraft AI
 
-This document outlines how systems thinking and technical foresight enabled the rapid composition of the PydanticAI API Template—a comprehensive foundation for robust AI-powered applications.
+This document outlines how systems thinking and technical foresight enabled the rapid composition of the Minecraft AI—a comprehensive foundation for robust AI-powered applications.
 
 ## Architectural Vision
 
@@ -42,6 +42,6 @@ This project showcases the ability to:
 
 ## Conclusion
 
-The PydanticAI API Template demonstrates how technical vision and systems thinking can transform the way we build AI applications. By composing the right abstractions, integration patterns, and development workflows, it's possible to create foundations that dramatically accelerate development while maintaining robustness and flexibility.
+The Minecraft AI demonstrates how technical vision and systems thinking can transform the way we build AI applications. By composing the right abstractions, integration patterns, and development workflows, it's possible to create foundations that dramatically accelerate development while maintaining robustness and flexibility.
 
 This approach—seeing the system as a whole and deliberately composing its parts—represents a powerful paradigm for developing sophisticated AI applications in remarkably compressed timeframes.

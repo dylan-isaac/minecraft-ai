@@ -39,7 +39,7 @@ The development environment uses VS Code's Dev Containers to provide a consisten
 
 1. **Configuration Flow**:
    - `.devcontainer/devcontainer.json` defines the container configuration
-   - It references `docker-compose.yml` (specifically the `pydanticai-api-template-dev` service) for container creation
+   - It references `docker-compose.yml` (specifically the `minecraft-ai-dev` service) for container creation
    - VS Code Server runs inside the container to provide IDE features
    - The container runs as a non-root user by default for better security.
 
@@ -68,8 +68,8 @@ The project uses several configuration files that work together to create a seam
 2. **Makefile** - Universal command interface
 3. **Docker** files (`Dockerfile`, `Dockerfile.dev`, `docker-compose.yml`)
    - Docker Compose profiles control which services run by default:
-     - `pydanticai-api-template-dev` (dev profile) - Development environment
-     - `pydanticai-api-template` (prod profile) - Production-like environment
+     - `minecraft-ai-dev` (dev profile) - Development environment
+     - `minecraft-ai` (prod profile) - Production-like environment
 4. **VS Code** configurations (`.devcontainer/devcontainer.json`, `.vscode/tasks.json`)
 5. **Pre-commit** configuration (`.pre-commit-config.yaml`)
 
@@ -149,7 +149,7 @@ When adding new dependencies:
 
 When modifying the CLI:
 
-1. Update `src/pydanticai_api_template/cli.py` to add or modify commands
+1. Update `src/minecraft_ai/cli.py` to add or modify commands
 2. Update automated tests as needed
 3. Run the config sync tool to update VS Code tasks:
 
@@ -253,7 +253,7 @@ pyproject.toml           # Primary source of truth for dependencies
     │   └── CI/CD        # Production container used in CI/CD
     │
     ├── Dockerfile.dev   # Development container definition
-    │   ├── docker-compose.yml       # Defines dev (`pydanticai-api-template-dev`) and prod services
+    │   ├── docker-compose.yml       # Defines dev (`minecraft-ai-dev`) and prod services
     │   └── .devcontainer/devcontainer.json  # Uses the dev service from docker-compose.yml
     │
     ├── .pre-commit-config.yaml  # Should align with dev dependencies
@@ -283,9 +283,9 @@ When adding new development tools:
 If the CLI doesn't work in containers:
 
 1. Verify the installation path in the Dockerfile or check if it's on PATH: `which pat`
-2. Check Python path and installation: `python -m pydanticai_api_template.cli --help`
-3. Debug with `docker compose exec pydanticai-api-template-dev which pat`
-4. Get a shell in the container for deeper debugging: `docker compose exec pydanticai-api-template-dev zsh`
+2. Check Python path and installation: `python -m minecraft_ai.cli --help`
+3. Debug with `docker compose exec minecraft-ai-dev which pat`
+4. Get a shell in the container for deeper debugging: `docker compose exec minecraft-ai-dev zsh`
 
 ### Application Startup Issues
 

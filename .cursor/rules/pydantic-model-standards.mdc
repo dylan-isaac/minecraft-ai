@@ -1,12 +1,12 @@
 ---
 description: "Pydantic model standards guidance (auto-attached)"
 globs:
-  - src/pydanticai_api_template/types/**.py
+  - src/minecraft_ai/types/**.py
 alwaysApply: false
 ---
 # Pydantic Model Standards
 
-📝 **Rule Triggered:** Addition or modification of files in `src/pydanticai_api_template/types/` (likely Pydantic models).
+📝 **Rule Triggered:** Addition or modification of files in `src/minecraft_ai/types/` (likely Pydantic models).
 
 **Core Principle:** Use Pydantic models for robust data validation and clear schema definition, leveraging its features for documentation and examples.
 

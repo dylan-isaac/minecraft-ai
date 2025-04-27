@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "pydanticai-api-template-mcp": {
+    "minecraft-ai-mcp": {
       "url": "http://localhost:3001/sse"
     },
     "context7": {
