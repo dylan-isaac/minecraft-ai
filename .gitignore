@@ -3,7 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
-.Python
+*.egg-info/
+*.egg
+*.manifest
 build/
 develop-eggs/
 dist/
@@ -16,12 +18,10 @@ parts/
 sdist/
 var/
 wheels/
-*.egg-info/
+.Python
 .installed.cfg
-*.egg
-MANIFEST
 
-# Environments
+# Virtual Environments
 .env
 .venv
 env/
@@ -29,8 +29,17 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+**/.env
+**/.env.*
 
-# Unit test / coverage reports
+# Local Environment Overrides (Keep separate from general .env)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+docker-compose.override.yml
+
+# Testing & Coverage
 htmlcov/
 .tox/
 .nox/
@@ -43,37 +52,58 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# Mypy
+# Type Checking
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
-# VS Code
+# IDEs & Editors
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.idea/
+*.swp
 
-# Docker
-.docker/
+# Dependency Directories
+node_modules/
 
-# Local development
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Debug logs
+# Build Artifacts & Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# OS specific
+# OS generated files
 .DS_Store
 Thumbs.db
 
-repomix-output.*
+# Gradle / Java
+/build/
+/.gradle/
+/run/
+*.iml
+*.ipr
+*.iws
+*.lockfile
+gradle/wrapper/gradle-wrapper.jar
+# Keep gradlew scripts and properties file:
+# !gradlew
+# !gradlew.bat
+# !gradle/wrapper/gradle-wrapper.properties
 
-# Cursor AI Staging Rules
+# Docker
+.docker/
+
+# Project Specific / Custom
+repomix-output.*
 .cursor/rules_staging/
+
+# Secrets (Ensure these are not committed!)
+secrets/
+*.private
+*.key
+
+# Explicitly keep certain files if needed (Example)
+# !important_file.txt
