@@ -72,32 +72,20 @@ If no API key is set in the environment, authentication will be skipped with a w
 - Requires `OPENAI_API_KEY` environment variable to be set
 - Uses the `gpt-4o` model by default
 
-### POST /story
+## Conversation Management Endpoints
 
-**Description**: Generates a story idea with a title and premise based on the user's input.
+The following endpoints enable persistent, multi-turn conversations with the AI assistant. These endpoints are stable and recommended for use. See [wishlist/conversation-history.md](../wishlist/conversation-history.md) for the design and progress.
 
-**Request**:
+- **POST /chats**: Create a new conversation. Request: `NewChatRequest`. Response: `ConversationInfo`.
+- **GET /chats**: List conversations accessible to the user. Response: `ConversationListResponse`.
+- **POST /chats/{conversation_id}/messages**: Add a message to a conversation and get the AI's reply. Request: `NewMessageRequest`. Response: `NewMessageResponse`.
 
-```json
-{
-  "message": "Give me a sci-fi story about time travel"
-}
-```
+**Security Model:**
+- All endpoints require an `X-API-Key` header. The API key is used as the owner identifier for all conversation and chat history. Never share your API key publicly.
+- Conversations are private to the API key. Anyone with the same key shares the same context. For self-hosting and small groups, this is appropriate. For public or multi-user servers, pass a player UUID or username from the mod to the API and add per-user conversation isolation.
+- Always generate a unique API key for each deployment. Rotate keys if compromised. For public hosting, add rate limiting and consider hashing the API key before storing/using it as an identifier.
 
-**Response**:
-
-```json
-{
-  "title": "Echoes of Tomorrow",
-  "premise": "A physicist discovers that time isn't linear but layered, with each moment existing simultaneously. When she builds a device to view these layers, she witnesses a future catastrophe and must find a way to reach across time to prevent it."
-}
-```
-
-**Notes**:
-
-- Requires `OPENAI_API_KEY` environment variable to be set
-- Uses the `gpt-4o` model by default
-- Input can specify genre, themes, or characters to guide the story idea generation
+See the code in `src/minecraft_ai/api/models.py` for the latest request/response model definitions.
 
 ## Error Responses
 

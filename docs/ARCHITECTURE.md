@@ -202,3 +202,14 @@ The successful workaround was to define the problematic parameter (`config` in t
 Inside the tool function, we check if the received `config` dictionary is non-empty before attempting to parse it into the corresponding Pydantic model (`LinterConfig`). If the client doesn't provide the `config` parameter in the tool call, it correctly defaults to the empty dictionary `{}`.
 
 This approach satisfies the framework's apparent requirement for simpler, non-optional type hints in the tool signature while still allowing optional configuration data to be passed and validated internally using Pydantic.
+
+## Conversation Management Subsystem (In Progress)
+
+A new subsystem enables persistent, multi-turn conversations with the AI assistant:
+
+- The Minecraft mod issues explicit commands (e.g., `/ai chat new`, `/ai chat list`, `/ai <message>`).
+- These commands call FastAPI endpoints (`/chats`, `/chats/{conversation_id}/messages`).
+- The backend stores conversation and message data in the SQLModel-powered database.
+- When a message is added, the full conversation history is passed to the PydanticAI agent for context-aware replies.
+
+This design keeps DB, API, and mod logic modular, making it easy to extend with features like public conversations or invites. See [wishlist/conversation-history.md](../wishlist/conversation-history.md) for the evolving design and requirements.

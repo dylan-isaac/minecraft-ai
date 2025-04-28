@@ -54,6 +54,7 @@ repos:
         # Project itself - necessary for mypy to find local modules
         ".",
     ]
+    stages: [pre-push]
 - repo: local
   hooks:
   - id: markdownlint-fix

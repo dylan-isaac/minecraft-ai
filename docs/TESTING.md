@@ -372,21 +372,6 @@ Add prompt testing to your CI pipeline:
     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 ```
 
-```yaml
-# For GitLab CI
-prompt-testing:
-  stage: test
-  image: node:18
-  before_script:
-    - apt-get update && apt-get install -y python3 python3-pip
-    - npm install -g promptfoo@0.1.0
-    - pip3 install -e ".[dev,test]"
-  script:
-    - python -m minecraft_ai.cli prompt-test
-  variables:
-    OPENAI_API_KEY: $OPENAI_API_KEY
-```
-
 ### Best Practices
 
 - **Version pinning**: Specify exact versions in CI configs
@@ -496,3 +481,39 @@ testCases:
 3. **Configuration file not found**:
    - Verify the path to your promptfoo configuration file
    - The default location is `promptfoo/config.yaml` in the project root
+
+## Conversation API Testing (Planned)
+
+As part of the conversation history feature (see [wishlist/conversation-history.md](../wishlist/conversation-history.md)), new endpoints will be covered by tests:
+
+- `POST /chats`: Test conversation creation, topic handling, and response structure.
+- `GET /chats`: Test listing of conversations for the current user.
+- `POST /chats/{conversation_id}/messages`: Test message addition, reply generation, and error handling (invalid ID, access control).
+
+Tests will be written before implementation (TDD) and will validate both success and failure modes for each endpoint.
+
+## API Key Enforcement in Tests
+
+All API endpoints require an `X-API-Key` header. The API key is used as the owner identifier for all conversation and chat history. All API tests must include a valid API key in requests. Tests for missing or invalid keys (expecting 401 Unauthorized) are required. For self-hosting and small groups, this is secure and simple. For public or multi-user use, see the Security & Privacy section in the README for best practices.
+
+### Testing API Endpoints
+
+When testing API endpoints, always include the `X-API-Key` header with a valid key. For conversation endpoints, the API key determines the owner of the conversation. To test multi-user or public scenarios, use different API keys or simulate player UUIDs as needed.
+
+Example:
+
+```python
+headers = {"X-API-Key": "test_key"}
+response = await async_client.post("/chats", json={"topic": "Test"}, headers=headers)
+assert response.status_code == 201
+```
+
+Test for missing/invalid keys:
+
+```python
+response = await async_client.post("/chats", json={})
+assert response.status_code == 401
+
+response = await async_client.post("/chats", json={}, headers={"X-API-Key": "wrong_key"})
+assert response.status_code == 401
+```

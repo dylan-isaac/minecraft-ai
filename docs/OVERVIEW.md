@@ -144,3 +144,7 @@ If you're new to this project, we recommend reading the documentation in this or
 7. OBSERVABILITY.md - Learn about monitoring and testing infrastructure
 8. MAINTENANCE.md - Learn about project maintenance
 9. Wishlist - Discover planned improvements and potential contributions
+
+### Conversation Management (In Progress)
+
+A new server-side conversation management system is being implemented to enable persistent, multi-turn AI chat from Minecraft. See [wishlist/conversation-history.md](../wishlist/conversation-history.md) for requirements, design, and progress. This feature is being developed with TDD and documentation-first practices.

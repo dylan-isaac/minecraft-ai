@@ -75,6 +75,7 @@ This README provides a high-level overview. For detailed information, refer to:
 - **Cursor Rules**: Smart AI-assisted development with contextual reminders
 - **Repomix Runner**: Easily bundle project files for providing context to AI assistants ([VS Code Extension](https://marketplace.cursorapi.com/items?itemName=DorianMassoulier.repomix-runner))
 - **Minecraft Integration**: Communicate with the API from in-game using a client-side Fabric mod.
+- **API Key Security**: All API endpoints require an `X-API-Key` header. The API key is used as the owner identifier for conversation history. Keep your key secret and unique per server/admin. For self-hosting, this is secure and simple. For public or multi-user use, see the Security & Privacy section below.
 
 ## Project Maintenance
 
@@ -187,25 +188,6 @@ story_agent = Agent("openai:gpt-4o", result_type=StoryIdea)
 result = await story_agent.run("Give me a sci-fi story idea")
 ```
 
-### Story API Endpoint
-
-You can generate story ideas using the `/story` endpoint:
-
-```bash
-cURL -X POST "http://localhost:8000/story" \\
-  -H "Content-Type: application/json" \\
-  -d '{"message":"Give me a sci-fi story about time travel"}'
-```
-
-Response:
-
-```json
-{
-  "title": "Echoes of Tomorrow",
-  "premise": "A physicist discovers that time isn't linear but layered, with each moment existing simultaneously. When she builds a device to view these layers, she witnesses a future catastrophe and must find a way to reach across time to prevent it."
-}
-```
-
 ### MCP Server Connection
 
 Connect any MCP-compatible client to access tools:
@@ -282,6 +264,14 @@ LOGFIRE_ENABLED="true"
 ```
 
 For detailed instructions, see [Observability](./docs/OBSERVABILITY.md).
+
+## Security & Privacy
+
+- **API Key Enforcement**: All endpoints require an `X-API-Key` header. The API key is used as the owner identifier for all conversation and chat history. Never share your API key publicly.
+- **Owner Identification**: Conversations are private to the API key. Anyone with the same key shares the same context. For self-hosting and small groups, this is appropriate. For public or multi-user servers, pass a player UUID or username from the mod to the API and add per-user conversation isolation.
+- **Best Practices**: Always generate a unique API key for each deployment. Rotate keys if compromised. For public hosting, add rate limiting and consider hashing the API key before storing/using it as an identifier.
+- **Retention**: No automatic cleanup or retention limits are enforced by default. For public hosting, consider adding retention policies and message limits.
+- **DDoS Protection**: Not implemented by default. For public hosting, add rate limiting and monitoring.
 
 ## Environment Setup
 
